@@ -216,7 +216,7 @@ def init_session_state() -> None:
             'zoom_client_secret': st.secrets["ZOOM_CLIENT_SECRET"],
             'email_sender': st.secrets["EMAIL_SENDER"],
             'email_passkey': st.secrets["EMAIL_PASSWORD"],
-            'company_name': st.secrets.get("COMPANY_NAME", "Aliando"),  # Default to Aliando if not set
+            'company_name': st.secrets.get("COMPANY_NAME", "Allometrik"),
             'current_pdf': None
         }
         for key, value in defaults.items():
@@ -232,7 +232,7 @@ def init_session_state() -> None:
         - ZOOM_CLIENT_SECRET
         - EMAIL_SENDER
         - EMAIL_PASSWORD
-        - COMPANY_NAME (optional, defaults to 'Aliando')
+        - COMPANY_NAME (optional, defaults to 'Allometrik')
         
         Go to: App Settings > Secrets
         """)
@@ -279,7 +279,7 @@ def create_email_agent() -> Agent:
             "Use proper grammar and capitalize sentences, names, and titles appropriately",
             "Do NOT use any markdown formatting (no **, __, *, etc.) in email body - write plain text only",
             "Maintain a friendly yet professional tone",
-            "Always end emails with exactly: 'Best,\nThe Aliando Recruiting Team'",
+            "Always end emails with exactly: 'Best,\nThe Allometrik Recruiting Team'",
             "Never include the sender's or receiver's name in the signature",
             f"The name of the company is '{st.session_state.company_name}'"
         ],
@@ -411,7 +411,7 @@ def analyze_resume(
 def send_selection_email(email_agent: Agent, to_email: str, role: str, role_display: str) -> None:
     email_agent.run(
         f"""
-        Send an email to {to_email} regarding their application for the {role_display} position at Aliando.
+        Send an email to {to_email} regarding their application for the {role_display} position at Allometrik.
         The email should:
         1. Congratulate them on being selected for an interview
         2. Make it clear they are moving to the interview stage of the recruitment process
@@ -439,7 +439,7 @@ def send_rejection_email(email_agent: Agent, to_email: str, role: str, role_disp
         6. Do NOT use markdown formatting in the email body
         7. End the email with exactly:
            Best,
-           The Aliando Recruiting Team
+           The Allometrik Recruiting Team
         
         Do not include any names in the signature.
         The tone should be professional yet empathetic.
@@ -652,21 +652,57 @@ def main() -> None:
             border: none;
             border-top: 2px solid #E2E8F0;
         }
+        
+        /* Footer */
+        .footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #F8FAFC;
+            color: #64748B;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9rem;
+            border-top: 1px solid #E2E8F0;
+            z-index: 999;
+        }
+        
+        .footer a {
+            color: #3B82F6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
         </style>
     """, unsafe_allow_html=True)
     
-    # Header with logo
-    try:
-        st.image("assets/logo_main.png", width=200)
-    except:
-        pass  # If logo doesn't load, just continue
+    # Header with logo and company name
+    header_col1, header_col2 = st.columns([1, 5])
     
-    st.markdown("""
-        <div style='text-align: left; margin-top: -10px; margin-bottom: 2rem;'>
-            <h1 style='margin: 0; color: #1E293B; font-size: 2.5rem; font-weight: 600;'>Multi-Agent Recruitment System</h1>
-            <p style='color: #64748B; font-size: 1.1rem; margin-top: 0.5rem;'>Intelligent candidate screening and interview scheduling</p>
-        </div>
-    """, unsafe_allow_html=True)
+    with header_col1:
+        try:
+            st.image("assets/logo_main.png", width=80)
+        except:
+            pass  # If logo doesn't load, just continue
+    
+    with header_col2:
+        st.markdown("""
+            <div style='display: flex; align-items: center; justify-content: space-between; margin-top: 10px;'>
+                <div>
+                    <h1 style='margin: 0; color: #1E293B; font-size: 2.5rem; font-weight: 600;'>Multi-Agent Recruitment System</h1>
+                    <p style='color: #64748B; font-size: 1.1rem; margin-top: 0.5rem;'>Intelligent candidate screening and interview scheduling</p>
+                </div>
+                <div style='text-align: right; margin-left: 2rem;'>
+                    <a href='https://allometrik.com' target='_blank' style='text-decoration: none;'>
+                        <h2 style='margin: 0; color: #1E293B; font-size: 2rem; font-weight: 700; letter-spacing: -0.5px;'>allometrik</h2>
+                    </a>
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
     
     st.markdown("---")
 
@@ -896,6 +932,18 @@ def main() -> None:
             st.markdown("### Resume Preview")
             st.markdown("")
             st.info("Upload a resume to see the preview here")
+    
+    # Footer with credits
+    st.markdown("<br><br><br>", unsafe_allow_html=True)  # Add space for fixed footer
+    st.markdown("""
+        <div class='footer'>
+            <p style='margin: 0;'>
+                Built with ❤️ by 
+                <a href='https://allometrik.com' target='_blank'><strong>Allometrik</strong></a>
+                — Specialized in building cutting-edge agentic AI solutions
+            </p>
+        </div>
+    """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()

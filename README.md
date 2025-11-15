@@ -61,7 +61,7 @@ A Streamlit application that simulates a full-service recruitment team using mul
    - `ZOOM_CLIENT_SECRET` - Zoom Client Secret
    - `EMAIL_SENDER` - Recruiter's Gmail address
    - `EMAIL_PASSWORD` - Gmail App Password (16 digits, no spaces)
-   - `COMPANY_NAME` - Your company name (optional, defaults to "Aliando")
+   - `COMPANY_NAME` - Your company name (optional, defaults to "Allometrik")
    
    **For Streamlit Cloud Deployment:**
    1. Go to your app dashboard on Streamlit Cloud
