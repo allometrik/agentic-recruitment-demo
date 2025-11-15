@@ -680,29 +680,34 @@ def main() -> None:
         </style>
     """, unsafe_allow_html=True)
     
-    # Header with logo and company name
-    header_col1, header_col2 = st.columns([1, 5])
+    # Header with logo and company name together
+    logo_col, title_col, spacer_col = st.columns([1, 3, 1])
     
-    with header_col1:
-        try:
-            st.image("assets/logo_main.png", width=80)
-        except:
-            pass  # If logo doesn't load, just continue
+    with logo_col:
+        # Logo and company name side by side
+        logo_brand_col1, logo_brand_col2 = st.columns([1, 2])
+        with logo_brand_col1:
+            try:
+                st.image("assets/logo_main.png", width=60)
+            except:
+                pass
+        with logo_brand_col2:
+            st.markdown("""
+                <a href='https://allometrik.com' target='_blank' style='text-decoration: none;'>
+                    <h2 style='margin: 0; margin-top: 15px; color: #1E293B; font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px;'>allometrik</h2>
+                </a>
+            """, unsafe_allow_html=True)
     
-    with header_col2:
+    with title_col:
         st.markdown("""
-            <div style='display: flex; align-items: center; justify-content: space-between; margin-top: 10px;'>
-                <div>
-                    <h1 style='margin: 0; color: #1E293B; font-size: 2.5rem; font-weight: 600;'>Multi-Agent Recruitment System</h1>
-                    <p style='color: #64748B; font-size: 1.1rem; margin-top: 0.5rem;'>Intelligent candidate screening and interview scheduling</p>
-                </div>
-                <div style='text-align: right; margin-left: 2rem;'>
-                    <a href='https://allometrik.com' target='_blank' style='text-decoration: none;'>
-                        <h2 style='margin: 0; color: #1E293B; font-size: 2rem; font-weight: 700; letter-spacing: -0.5px;'>allometrik</h2>
-                    </a>
-                </div>
+            <div style='text-align: center; margin-top: 5px;'>
+                <h1 style='margin: 0; color: #1E293B; font-size: 2.5rem; font-weight: 600;'>Multi-Agent Recruitment System</h1>
+                <p style='color: #64748B; font-size: 1.1rem; margin-top: 0.5rem;'>Intelligent candidate screening and interview scheduling</p>
             </div>
         """, unsafe_allow_html=True)
+    
+    with spacer_col:
+        st.write("")  # Empty spacer for balance
     
     st.markdown("---")
 
