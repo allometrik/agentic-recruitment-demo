@@ -684,6 +684,8 @@ def main() -> None:
     logo_col, title_col, spacer_col = st.columns([1, 3, 1])
     
     with logo_col:
+        # Add spacing to push logo down
+        st.markdown("<div style='margin-top: 15px;'></div>", unsafe_allow_html=True)
         # Logo and company name side by side with vertical alignment
         brand_col1, brand_col2 = st.columns([1, 3])
         with brand_col1:
