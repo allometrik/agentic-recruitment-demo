@@ -684,18 +684,18 @@ def main() -> None:
     logo_col, title_col, spacer_col = st.columns([1, 3, 1])
     
     with logo_col:
-        # Add spacing to push logo down
-        st.markdown("<div style='margin-top: 15px;'></div>", unsafe_allow_html=True)
         # Logo and company name side by side with vertical alignment
         brand_col1, brand_col2 = st.columns([1, 3])
         with brand_col1:
             try:
+                # Add margin to push logo down to align with text
+                st.markdown("<div style='margin-top: 23px;'></div>", unsafe_allow_html=True)
                 st.image("assets/logo_main.png", width=60)
             except:
                 pass
         with brand_col2:
             st.markdown("""
-                <div style='margin-top: 8px;'>
+                <div style='margin-top: 23px;'>
                     <a href='https://allometrik.com' target='_blank' style='text-decoration: none;'>
                         <h2 style='margin: 0; color: #1E293B; font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px;'>allometrik</h2>
                     </a>
