@@ -685,14 +685,20 @@ def main() -> None:
     
     with logo_col:
         # Logo and company name side by side with vertical alignment
-        st.markdown("""
-            <div style='display: flex; align-items: center; gap: 10px;'>
-                <img src='assets/logo_main.png' width='60' style='display: block;' />
-                <a href='https://allometrik.com' target='_blank' style='text-decoration: none;'>
-                    <h2 style='margin: 0; color: #1E293B; font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px;'>allometrik</h2>
-                </a>
-            </div>
-        """, unsafe_allow_html=True)
+        brand_col1, brand_col2 = st.columns([1, 3])
+        with brand_col1:
+            try:
+                st.image("assets/logo_main.png", width=60)
+            except:
+                pass
+        with brand_col2:
+            st.markdown("""
+                <div style='margin-top: 8px;'>
+                    <a href='https://allometrik.com' target='_blank' style='text-decoration: none;'>
+                        <h2 style='margin: 0; color: #1E293B; font-size: 1.8rem; font-weight: 700; letter-spacing: -0.5px;'>allometrik</h2>
+                    </a>
+                </div>
+            """, unsafe_allow_html=True)
     
     with title_col:
         st.markdown("""
