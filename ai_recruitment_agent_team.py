@@ -689,7 +689,7 @@ def main() -> None:
         with brand_col1:
             try:
                 # Add margin to push logo down to align with text
-                st.markdown("<div style='margin-top: 23px;'></div>", unsafe_allow_html=True)
+                st.markdown("<div style='margin-top: 28px;'></div>", unsafe_allow_html=True)
                 st.image("assets/logo_main.png", width=60)
             except:
                 pass
