@@ -645,7 +645,7 @@ def main() -> None:
     
     # Header with logo
     try:
-        st.image("assets/logo_diez.svg", width=200)
+        st.image("assets/logo_main.png", width=200)
     except:
         pass  # If logo doesn't load, just continue
     
