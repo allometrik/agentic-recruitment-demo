@@ -43,9 +43,33 @@ A Streamlit application that simulates a full-service recruitment team using mul
    ```
 
 2. **Configure API Keys**
-   - OpenAI API key for GPT-4o access
-   - Zoom API credentials (Account ID, Client ID, Client Secret)
-   - Email App Password of Recruiter's Email
+   
+   The application uses Streamlit's secrets management for secure configuration.
+   
+   **For Local Development:**
+   ```bash
+   # Create secrets file from example
+   cp .streamlit/secrets.toml.example .streamlit/secrets.toml
+   
+   # Edit .streamlit/secrets.toml with your actual credentials
+   ```
+   
+   Required secrets:
+   - `OPENAI_API_KEY` - Your OpenAI API key for GPT-4o access
+   - `ZOOM_ACCOUNT_ID` - Zoom Account ID
+   - `ZOOM_CLIENT_ID` - Zoom Client ID
+   - `ZOOM_CLIENT_SECRET` - Zoom Client Secret
+   - `EMAIL_SENDER` - Recruiter's Gmail address
+   - `EMAIL_PASSWORD` - Gmail App Password (16 digits, no spaces)
+   - `COMPANY_NAME` - Your company name (optional, defaults to "Aliando")
+   
+   **For Streamlit Cloud Deployment:**
+   1. Go to your app dashboard on Streamlit Cloud
+   2. Navigate to **Settings** > **Secrets**
+   3. Paste the contents from `.streamlit/secrets.toml.example`
+   4. Replace with your actual credentials
+   
+   > **Note:** The `.streamlit/secrets.toml` file is gitignored and should NEVER be committed to version control.
 
 3. **Run the Application**
    ```bash

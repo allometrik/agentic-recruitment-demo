@@ -131,14 +131,9 @@ class CustomEmailTools(Toolkit):
         return "email sent successfully"
 
 
-# Hardcoded API Keys and Configuration
-OPENAI_API_KEY = "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"
-ZOOM_ACCOUNT_ID = "TSHm2WP4QqOQKfmdfp-IJg"
-ZOOM_CLIENT_ID = "UbxccLvvSRik0JLvZ7aLhg"
-ZOOM_CLIENT_SECRET = "FSQdm27zjRrWfje4aVItacPE6vBo1hFs"
-EMAIL_SENDER = "jose@allometrik.com"
-EMAIL_PASSWORD = "bnavvmmszgfgujqr"
-COMPANY_NAME = "Aliando"
+# Configuration loaded from Streamlit secrets
+# These should be set in Streamlit Cloud under Settings > Secrets
+# or locally in .streamlit/secrets.toml
 
 # Role display names mapping
 ROLE_DISPLAY_NAMES: Dict[str, str] = {
@@ -207,24 +202,41 @@ ROLE_REQUIREMENTS: Dict[str, str] = {
 
 
 def init_session_state() -> None:
-    """Initialize only necessary session state variables with hardcoded API keys."""
-    defaults = {
-        'candidate_email': "",
-        'openai_api_key': OPENAI_API_KEY,
-        'resume_text': "",
-        'analysis_complete': False,
-        'is_selected': False,
-        'zoom_account_id': ZOOM_ACCOUNT_ID,
-        'zoom_client_id': ZOOM_CLIENT_ID,
-        'zoom_client_secret': ZOOM_CLIENT_SECRET,
-        'email_sender': EMAIL_SENDER,
-        'email_passkey': EMAIL_PASSWORD,
-        'company_name': COMPANY_NAME,
-        'current_pdf': None
-    }
-    for key, value in defaults.items():
-        if key not in st.session_state:
-            st.session_state[key] = value
+    """Initialize session state variables with values from Streamlit secrets."""
+    # Load secrets from Streamlit configuration
+    try:
+        defaults = {
+            'candidate_email': "",
+            'openai_api_key': st.secrets["OPENAI_API_KEY"],
+            'resume_text': "",
+            'analysis_complete': False,
+            'is_selected': False,
+            'zoom_account_id': st.secrets["ZOOM_ACCOUNT_ID"],
+            'zoom_client_id': st.secrets["ZOOM_CLIENT_ID"],
+            'zoom_client_secret': st.secrets["ZOOM_CLIENT_SECRET"],
+            'email_sender': st.secrets["EMAIL_SENDER"],
+            'email_passkey': st.secrets["EMAIL_PASSWORD"],
+            'company_name': st.secrets.get("COMPANY_NAME", "Aliando"),  # Default to Aliando if not set
+            'current_pdf': None
+        }
+        for key, value in defaults.items():
+            if key not in st.session_state:
+                st.session_state[key] = value
+    except KeyError as e:
+        st.error(f"Missing required secret: {e}")
+        st.info("""
+        Please configure the following secrets in Streamlit Cloud:
+        - OPENAI_API_KEY
+        - ZOOM_ACCOUNT_ID
+        - ZOOM_CLIENT_ID
+        - ZOOM_CLIENT_SECRET
+        - EMAIL_SENDER
+        - EMAIL_PASSWORD
+        - COMPANY_NAME (optional, defaults to 'Aliando')
+        
+        Go to: App Settings > Secrets
+        """)
+        st.stop()
 
 
 def create_resume_analyzer() -> Agent:
